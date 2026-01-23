@@ -1,18 +1,15 @@
-const express = require('express');
+const express = require("express");
 const app = express();
-const port = 3000
-const router = require("./routers/index");
-const conexao = require("./infraestrutura/conexao");
-const tabelas = require(".infraestrutura/tabelas");
+const config = require("config");
+const port = 3000;
+const appCustom = require("./config/appCustom");
 
-tabelas.init(conexao);
+appCustom(app, express);
 
-router(app);
-
-app.listen(3000, (error) =>{
-    if(error){
-        console.log("Deu erro");
-        return;
-    }
-    console.log("Aplicação rodando!");
+app.listen(config.get("port"), (error) => {
+  if (error) {
+    console.log("Erro durante a execução...");
+    return;
+  }
+  console.log("Aplicação rodando!");
 });
